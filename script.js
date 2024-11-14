@@ -8,9 +8,16 @@ const weatherIcon = document.querySelector(".weather-icon");
 
 async function getWeatherDate(city) {
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
-    const data = await response.json();
-    console.log(data);
+   
+    
+    if(response.status == 404)
+    {
+         document.querySelector(".error").style.display="block"
+         document.querySelector(".weather").style.display="none"
+    }
+    else{
 
+        var data = await response.json();
 
     document.querySelector(".city").textContent = data.name;
     document.querySelector(".temp").textContent = Math.round(data.main.temp) + "°C";
@@ -33,6 +40,13 @@ async function getWeatherDate(city) {
     else if (data.weather[0].main == "Drizzle") {
         weatherIcon.src = "images/deizzle.png"
     }
+    
+    
+    document.querySelector(".weather").style.display="block"
+    document.querySelector(".error").style.display="none"
+    }
+
+
 
 }
 
